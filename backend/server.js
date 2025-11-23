@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
+require('dotenv').config(); // Re-enable dotenv
 
 const app = express();
 const port = 3001;
@@ -8,10 +9,11 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-const GEMINI_API_KEY = "AIzaSyDxd0gLKSABCMebuGjN-s8B02AS1SZWyfo";
+// --- API KEY LOADED SECURELY FROM .env FILE ---
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
-if (!GEMINI_API_KEY || GEMINI_API_KEY === "PASTE_YOUR_API_KEY_HERE") {
-    throw new Error("Por favor, substitua 'PASTE_YOUR_API_KEY_HERE' pela sua chave de API do Gemini em backend/server.js");
+if (!GEMINI_API_KEY) {
+    throw new Error("A chave GEMINI_API_KEY não foi encontrada no arquivo .env. Por favor, configure-a.");
 }
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 
