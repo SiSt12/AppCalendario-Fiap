@@ -8,7 +8,7 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-const GEMINI_API_KEY = "PASTE_YOUR_API_KEY_HERE";
+const GEMINI_API_KEY = "AIzaSyDxd0gLKSABCMebuGjN-s8B02AS1SZWyfo";
 
 if (!GEMINI_API_KEY || GEMINI_API_KEY === "PASTE_YOUR_API_KEY_HERE") {
     throw new Error("Por favor, substitua 'PASTE_YOUR_API_KEY_HERE' pela sua chave de API do Gemini em backend/server.js");
