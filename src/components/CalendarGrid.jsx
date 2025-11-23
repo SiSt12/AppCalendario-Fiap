@@ -1,61 +1,54 @@
-const CalendarGrid = ({ days, onDateClick, getEventsForDate, isToday }) => {
+const CalendarGrid = ({ days, onDateClick, getEventsForDate, isToday, onEventClick, weekStartDay, selectedEvents, onToggleSelect, isSelectionMode }) => {
+    const dayLabels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const orderedDayLabels = [...dayLabels.slice(weekStartDay), ...dayLabels.slice(0, weekStartDay)];
+
     return (
-        <div className="glass-effect rounded-2xl p-6 shadow-xl">
-            {/* Day headers */}
-            <div className="grid grid-cols-7 gap-2 mb-4">
-                {['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].map(day => (
-                    <div key={day} className="text-center font-semibold text-gray-700 py-2">
-                        {day}
-                    </div>
-                ))}
-            </div>
+        <div className="grid grid-cols-7 gap-1 text-center text-sm">
+            {orderedDayLabels.map(day => (
+                <div key={day} className="font-bold text-black p-2">{day}</div>
+            ))}
 
-            {/* Calendar days */}
-            <div className="grid grid-cols-7 gap-2">
-                {days.map((dayInfo, index) => {
-                    const dayEvents = getEventsForDate(dayInfo.date);
-                    const isTodayDate = isToday(dayInfo.date);
+            {days.map(({ day, isCurrentMonth, date }) => {
+                const eventsOnDay = getEventsForDate(date);
+                const dayClasses = [
+                    'calendar-day', 'relative', 'h-24 md:h-32', 'p-2', 'border', 'rounded-lg', 'overflow-hidden',
+                    isCurrentMonth ? 'bg-white/80 border-gray-200' : 'bg-gray-200/50 border-gray-100 text-gray-400',
+                    isToday(date) ? 'current-day' : '',
+                    isSelectionMode ? 'cursor-default' : 'cursor-pointer',
+                ].join(' ');
 
-                    return (
-                        <div
-                            key={index}
-                            onClick={() => dayInfo.isCurrentMonth && onDateClick(dayInfo.date)}
-                            className={`
-                                calendar-day min-h-[80px] p-2 rounded-lg cursor-pointer
-                                ${dayInfo.isCurrentMonth ? 'bg-gray-200' : 'bg-gray-100'}
-                                ${isTodayDate ? 'current-day' : ''}
-                            `}
-                        >
-                            <div className={`
-                                text-sm font-semibold mb-1
-                                ${dayInfo.isCurrentMonth ? 'text-gray-800' : 'text-gray-500'}
-                                ${isTodayDate ? 'text-accent-600' : ''}
-                            `}>
-                                {dayInfo.day}
-                            </div>
-                            <div className="space-y-1">
-                                {dayEvents.slice(0, 2).map(event => (
+                return (
+                    <div key={date.toISOString()} className={dayClasses} onClick={() => onDateClick(date)}>
+                        <span className="font-medium">{day}</span>
+                        <div className="mt-1 space-y-1">
+                            {eventsOnDay.slice(0, 2).map(event => {
+                                const isSelected = selectedEvents.has(event.id);
+                                return (
                                     <div
                                         key={event.id}
-                                        className="text-xs px-2 py-1 rounded truncate text-white"
+                                        onClick={(e) => { e.stopPropagation(); onEventClick(event, e); }}
+                                        className={`relative text-xs text-white p-1 rounded-md truncate cursor-pointer group ${isSelected ? 'ring-2 ring-blue-500' : ''}`}
                                         style={{ backgroundColor: event.color }}
                                     >
-                                        {event.title}
+                                        <div
+                                            className={`absolute top-0 right-0 w-5 h-5 flex items-center justify-center bg-black/20 rounded-bl-md opacity-0 group-hover:opacity-100 transition-opacity ${isSelectionMode && 'opacity-100'}`}
+                                            onClick={(e) => { e.stopPropagation(); onToggleSelect(event.id); }}
+                                        >
+                                            <div className={`w-3 h-3 border-2 border-white rounded-sm ${isSelected ? 'bg-white' : ''}`}></div>
+                                        </div>
+                                        {event.startTime && <span className="font-semibold">{event.startTime}</span>} {event.title}
                                     </div>
-                                ))}
-                                {dayEvents.length > 2 && (
-                                    <div className="text-xs text-gray-600 px-2">
-                                        +{dayEvents.length - 2} mais
-                                    </div>
-                                )}
-                            </div>
+                                );
+                            })}
+                            {eventsOnDay.length > 2 && (
+                                <div className="text-xs text-gray-500">+ {eventsOnDay.length - 2} mais</div>
+                            )}
                         </div>
-                    );
-                })}
-            </div>
+                    </div>
+                );
+            })}
         </div>
     );
 };
 
-// Export to window
 window.CalendarGrid = CalendarGrid;

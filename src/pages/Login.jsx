@@ -26,19 +26,19 @@ const Login = ({ onNavigate }) => {
         <div className="min-h-screen flex items-center justify-center p-4 animate-fade-in">
             <div className="glass-effect rounded-3xl p-8 w-full max-w-md shadow-2xl animate-slide-up">
                 <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold text-white mb-2">Bem-vindo de Volta</h1>
-                    <p className="text-gray-200">Entre na sua conta</p>
+                    <h1 className="text-4xl font-bold text-black mb-2">Bem-vindo!</h1>
+                    <p className="text-black">Entre na sua conta</p>
                 </div>
 
                 {error && (
-                    <div className="bg-red-500/20 border border-red-500 text-white px-4 py-3 rounded-lg mb-4 animate-scale-in">
+                    <div className="bg-red-500/20 border border-red-500 text-black px-4 py-3 rounded-lg mb-4 animate-scale-in">
                         {error}
                     </div>
                 )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-white font-medium mb-2">E-mail</label>
+                        <label className="block text-black font-medium mb-2">E-mail</label>
                         <input
                             type="email"
                             value={email}
@@ -49,7 +49,7 @@ const Login = ({ onNavigate }) => {
                     </div>
 
                     <div>
-                        <label className="block text-white font-medium mb-2">Senha</label>
+                        <label className="block text-black font-medium mb-2">Senha</label>
                         <input
                             type="password"
                             value={password}
@@ -68,11 +68,11 @@ const Login = ({ onNavigate }) => {
                 </form>
 
                 <div className="mt-6 text-center">
-                    <p className="text-gray-200">
+                    <p className="text-black">
                         Não tem uma conta?{' '}
                         <button
                             onClick={() => onNavigate('register')}
-                            className="text-white font-semibold hover:underline"
+                            className="text-black font-semibold hover:underline"
                         >
                             Cadastre-se
                         </button>

@@ -4,12 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendário</title>
+    <title>InteliAgenda</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    spacing: {
+                        '15': '3.75rem', // For DayView hourly height
+                    },
                     colors: {
                         primary: {
                             50: '#f8fafc',
@@ -112,14 +116,6 @@
             border: 3px solid #3b82f6 !important;
             font-weight: bold;
         }
-
-        .event-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            display: inline-block;
-            margin: 0 1px;
-        }
     </style>
 </head>
 
@@ -132,10 +128,16 @@
 
     <!-- Load all component files -->
     <script type="text/babel" src="./src/context/AuthContext.jsx"></script>
-    <script type="text/babel" src="./src/components/DayViewModal.jsx"></script>
+    <script type="text/babel" src="./src/components/InfoModal.jsx"></script>
+    <script type="text/babel" src="./src/components/ConfirmModal.jsx"></script>
+    <script type="text/babel" src="./src/components/OnboardingModal.jsx"></script>
+    <script type="text/babel" src="./src/components/RoutineModal.jsx"></script>
+    <script type="text/babel" src="./src/components/MultiSelectToolbar.jsx"></script>
     <script type="text/babel" src="./src/components/EventModal.jsx"></script>
     <script type="text/babel" src="./src/components/CalendarHeader.jsx"></script>
     <script type="text/babel" src="./src/components/CalendarGrid.jsx"></script>
+    <script type="text/babel" src="./src/components/WeekView.jsx"></script>
+    <script type="text/babel" src="./src/components/DayView.jsx"></script>
     <script type="text/babel" src="./src/pages/Login.jsx"></script>
     <script type="text/babel" src="./src/pages/Register.jsx"></script>
     <script type="text/babel" src="./src/pages/Calendar.jsx"></script>
