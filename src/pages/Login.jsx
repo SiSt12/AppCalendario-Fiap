@@ -12,13 +12,13 @@ const Login = ({ onNavigate }) => {
         setError('');
 
         if (!email || !password) {
-            setError('Por favor, preencha todos os campos');
+            setError('Por favor, preencha todos os campos.');
             return;
         }
 
         const result = login(email, password);
         if (!result.success) {
-            setError(result.error);
+            setError(result.message);
         }
     };
 
@@ -31,7 +31,7 @@ const Login = ({ onNavigate }) => {
                 </div>
 
                 {error && (
-                    <div className="bg-red-500/20 border border-red-500 text-black px-4 py-3 rounded-lg mb-4 animate-scale-in">
+                    <div className="bg-red-500/20 border border-red-500 text-red-800 px-4 py-3 rounded-lg mb-4 animate-scale-in text-center">
                         {error}
                     </div>
                 )}
@@ -44,7 +44,7 @@ const Login = ({ onNavigate }) => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="input-field w-full px-4 py-3 rounded-lg bg-white/90 border-2 border-transparent focus:border-primary-400 focus:outline-none"
-                            placeholder="your@email.com"
+                            placeholder="seu@email.com"
                         />
                     </div>
 
@@ -83,5 +83,4 @@ const Login = ({ onNavigate }) => {
     );
 };
 
-// Export to window
 window.Login = Login;

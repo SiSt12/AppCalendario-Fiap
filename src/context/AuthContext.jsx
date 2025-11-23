@@ -19,9 +19,9 @@ const AuthProvider = ({ children }) => {
 
     const login = (email, password) => {
         const users = JSON.parse(localStorage.getItem('users') || '[]');
-        const foundUser = users.find(u => u.email === email && u.password === password);
+        const foundUser = users.find(u => u.email === email);
 
-        if (foundUser) {
+        if (foundUser && foundUser.password === password) {
             setUser(foundUser);
             localStorage.setItem('user', JSON.stringify(foundUser));
             
@@ -33,9 +33,10 @@ const AuthProvider = ({ children }) => {
                 setShowOnboarding(true);
             }
             
-            return true;
+            return { success: true };
         }
-        return false;
+        
+        return { success: false, message: 'E-mail ou senha inválidos.' };
     };
 
     const register = (name, email, password) => {
